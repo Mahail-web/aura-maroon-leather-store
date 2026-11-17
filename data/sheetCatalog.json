@@ -1,0 +1,65 @@
+{
+  "sourceUrl": "https://1drv.ms/x/c/2ba4a71ce0d99030/IQD7TRwi5vCXT7P7Nr9n6pFqAXaHI_fpI56qEvOmhM9Z26s",
+  "lastUpdated": "2026-11-17T13:24:22.818Z",
+  "products": [
+    {
+      "name": "Flashback Maroon Leather Biker Jacket",
+      "category": "Women's Leather Biker Jacket",
+      "originalTJMPricePKR": 36400,
+      "affordableAuraPricePKR": 6550,
+      "stockStatus": "In Stock",
+      "description": "Real sheepskin leather with semi-aniline finish, quilted polyester lining, zipper closure and notch collar.",
+      "imageNote": "View product photos"
+    },
+    {
+      "name": "Sherilyn B-3 Maroon Leather Bomber Jacket",
+      "category": "Women's Leather Bomber Jacket",
+      "originalTJMPricePKR": 50400,
+      "affordableAuraPricePKR": 9050,
+      "stockStatus": "In Stock",
+      "description": "Maroon B-3 bomber style leather jacket. Listed with free shipping and 60-day exchange.",
+      "imageNote": "View product photos"
+    },
+    {
+      "name": "Savant Maroon & Black Hybrid Varsity Jacket",
+      "category": "Women's Hybrid Varsity Jacket",
+      "originalTJMPricePKR": 36800,
+      "affordableAuraPricePKR": 6600,
+      "stockStatus": "In Stock",
+      "description": "Hybrid design with sheepskin leather sleeves, synthetic wool torso, quilted polyester lining and snap-button closure.",
+      "imageNote": "View product photos"
+    },
+    {
+      "name": "Kelsee Maroon Leather Biker Jacket",
+      "category": "Women's Leather Biker Jacket",
+      "originalTJMPricePKR": 38400,
+      "affordableAuraPricePKR": 6900,
+      "stockStatus": "In Stock",
+      "description": "Real sheepskin leather with semi-aniline finish, quilted polyester lining, zipper closure and band collar.",
+      "imageNote": "View product photos"
+    },
+    {
+      "name": "Reida Maroon Leather Bomber Jacket",
+      "category": "Women's Leather Bomber Jacket",
+      "originalTJMPricePKR": 36800,
+      "affordableAuraPricePKR": 6600,
+      "stockStatus": "Out of Stock",
+      "description": "Real sheepskin leather with aniline finish, quilted viscose lining, zipper closure and varsity collar.",
+      "imageNote": "View product photos"
+    }
+  ],
+  "notes": [
+    {
+      "Source collection": "Stock note",
+      "https://www.thejacketmaker.pk/collections/womens-maroon-leather-jackets": "All five selected product pages displayed a Sold out button when checked. Stock can change; verify on the product page before using this catalog operationally."
+    },
+    {
+      "Source collection": "Image column",
+      "https://www.thejacketmaker.pk/collections/womens-maroon-leather-jackets": "Each 'View product photos' link opens the corresponding product page, where the product images are displayed. The images are not embedded in this workbook."
+    },
+    {
+      "Source collection": "Price note",
+      "https://www.thejacketmaker.pk/collections/womens-maroon-leather-jackets": "Prices are the displayed sale prices in PKR at the time of checking."
+    }
+  ]
+}
