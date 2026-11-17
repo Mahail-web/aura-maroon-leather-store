@@ -3,9 +3,14 @@
 import React, { useState, useMemo } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { HeroBanner } from '@/components/HeroBanner';
+import { BrandTicker } from '@/components/BrandTicker';
+import { BrowseByStyle } from '@/components/BrowseByStyle';
+import { HappyCustomers } from '@/components/HappyCustomers';
+import { NewsletterOverlay } from '@/components/NewsletterOverlay';
 import { PriceComparisonBanner } from '@/components/PriceComparisonBanner';
 import { FilterSidebar } from '@/components/FilterSidebar';
 import { ProductGrid } from '@/components/ProductGrid';
+import { ProductCard } from '@/components/ProductCard';
 import { QuickViewModal } from '@/components/QuickViewModal';
 import { SizeGuideModal } from '@/components/SizeGuideModal';
 import { CartDrawer } from '@/components/CartDrawer';
@@ -13,7 +18,6 @@ import { CheckoutModal } from '@/components/CheckoutModal';
 import { WishlistDrawer } from '@/components/WishlistDrawer';
 import { GoogleSheetsModal } from '@/components/GoogleSheetsModal';
 import { Chatbot } from '@/components/Chatbot';
-import { ReviewsSection } from '@/components/ReviewsSection';
 import { Footer } from '@/components/Footer';
 
 import { MAROON_PRODUCTS } from '@/data/products';
@@ -22,7 +26,7 @@ import { CartItem, Product } from '@/types';
 export default function Home() {
   // Navigation & Modals State
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [wishlist, setWishlist] = useState<string[]>(['prod-01', 'prod-02']); // Sample initial liked jackets
+  const [wishlist, setWishlist] = useState<string[]>(['prod-01', 'prod-02']);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -99,7 +103,6 @@ export default function Home() {
   const filteredProducts = useMemo(() => {
     let result = [...MAROON_PRODUCTS];
 
-    // Search
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       result = result.filter(
@@ -111,12 +114,10 @@ export default function Home() {
       );
     }
 
-    // Style
     if (selectedStyle !== 'All') {
       result = result.filter((p) => p.style === selectedStyle);
     }
 
-    // Price
     if (priceRange === 'under6500') {
       result = result.filter((p) => p.salePricePKR < 6500);
     } else if (priceRange === '6500-7500') {
@@ -125,17 +126,14 @@ export default function Home() {
       result = result.filter((p) => p.salePricePKR > 7500);
     }
 
-    // Size
     if (selectedSize !== 'All') {
       result = result.filter((p) => p.sizes.includes(selectedSize as any));
     }
 
-    // Finish
     if (selectedFinish !== 'All') {
       result = result.filter((p) => p.finish === selectedFinish);
     }
 
-    // Sorting
     if (sortBy === 'price-asc') {
       result.sort((a, b) => a.salePricePKR - b.salePricePKR);
     } else if (sortBy === 'price-desc') {
@@ -149,10 +147,14 @@ export default function Home() {
     return result;
   }, [searchQuery, selectedStyle, priceRange, selectedSize, selectedFinish, sortBy]);
 
+  // Shop.co Split: New Arrivals (first 4) & Top Selling (next 4)
+  const newArrivals = useMemo(() => MAROON_PRODUCTS.slice(0, 4), []);
+  const topSelling = useMemo(() => MAROON_PRODUCTS.slice(4, 8), []);
+
   return (
-    <div className="min-h-screen flex flex-col bg-brand-beige-50">
+    <div className="min-h-screen flex flex-col bg-white">
       
-      {/* Navbar */}
+      {/* 1. Shop.co Navbar */}
       <Navbar
         cartItems={cartItems}
         wishlist={wishlist}
@@ -166,21 +168,90 @@ export default function Home() {
 
       <main className="flex-1">
         
-        {/* Collection Hero Banner with Feminine Purple & Beige theme */}
-        <HeroBanner
-          selectedStyle={selectedStyle}
-          onSelectStyle={(s) => setSelectedStyle(s)}
-          totalProductsCount={filteredProducts.length}
+        {/* 2. Shop.co Hero Section */}
+        <HeroBanner />
+
+        {/* 3. Shop.co Brand Ticker */}
+        <BrandTicker />
+
+        {/* 4. Shop.co Signature Section: NEW ARRIVALS */}
+        <section id="new-arrivals" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-b border-brand-beige-200">
+          <h2 className="font-sans font-black text-3xl sm:text-4xl md:text-5xl text-center text-brand-purple-950 uppercase tracking-tight mb-10">
+            NEW ARRIVALS
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {newArrivals.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onQuickView={(p) => setQuickViewProduct(p)}
+                onAddToCart={(p, size, color) => handleAddToCart(p, size, color)}
+                isWishlisted={wishlist.includes(product.id)}
+                onToggleWishlist={handleToggleWishlist}
+              />
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <a
+              href="#collection"
+              className="inline-block px-14 py-3 rounded-full border border-black/10 hover:border-brand-purple-600 hover:text-brand-purple-600 font-bold text-xs sm:text-sm text-brand-purple-950 transition"
+            >
+              View All Maroon Jackets
+            </a>
+          </div>
+        </section>
+
+        {/* 5. Shop.co Signature Section: TOP SELLING */}
+        <section id="top-selling" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-b border-brand-beige-200">
+          <h2 className="font-sans font-black text-3xl sm:text-4xl md:text-5xl text-center text-brand-purple-950 uppercase tracking-tight mb-10">
+            TOP SELLING
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {topSelling.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onQuickView={(p) => setQuickViewProduct(p)}
+                onAddToCart={(p, size, color) => handleAddToCart(p, size, color)}
+                isWishlisted={wishlist.includes(product.id)}
+                onToggleWishlist={handleToggleWishlist}
+              />
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <a
+              href="#collection"
+              className="inline-block px-14 py-3 rounded-full border border-black/10 hover:border-brand-purple-600 hover:text-brand-purple-600 font-bold text-xs sm:text-sm text-brand-purple-950 transition"
+            >
+              View All Top Sellers
+            </a>
+          </div>
+        </section>
+
+        {/* 6. Shop.co Bento Grid: BROWSE BY JACKET SILHOUETTE */}
+        <BrowseByStyle
+          onSelectStyle={(style) => {
+            setSelectedStyle(style);
+          }}
         />
 
-        {/* Price Comparison Explanation */}
+        {/* 7. Price Comparison (The Jacket Maker vs Aura Studio) */}
         <PriceComparisonBanner />
 
-        {/* Main Products Grid with Filter Sidebar */}
-        <section id="collection" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* 8. Full Product Collection with Filter Sidebar */}
+        <section id="collection" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center mb-8">
+            <span className="text-xs font-bold text-brand-purple-600 uppercase tracking-wider">
+              Handcrafted in Sialkot, Pakistan
+            </span>
+            <h2 className="font-sans font-black text-2xl sm:text-3xl text-brand-purple-950 uppercase tracking-tight mt-1">
+              Explore Complete Maroon Collection ({filteredProducts.length})
+            </h2>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
             
-            {/* Filter Sidebar (Desktop & Tablet) */}
+            {/* Filter Sidebar */}
             <div className="lg:col-span-1 sticky top-28">
               <FilterSidebar
                 selectedStyle={selectedStyle}
@@ -196,7 +267,7 @@ export default function Home() {
               />
             </div>
 
-            {/* Product Grid (3 columns on desktop) */}
+            {/* Product Grid (3 cols on desktop) */}
             <div className="lg:col-span-3">
               <ProductGrid
                 products={filteredProducts}
@@ -213,12 +284,15 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Verified Pakistani Customer Reviews Section */}
-        <ReviewsSection />
+        {/* 9. Shop.co Testimonials Carousel */}
+        <HappyCustomers />
+
+        {/* 10. Shop.co Overlapping Newsletter Banner */}
+        <NewsletterOverlay />
 
       </main>
 
-      {/* Footer */}
+      {/* 11. Shop.co Multi-Column Footer */}
       <Footer />
 
       {/* MODALS & DRAWERS */}
@@ -237,12 +311,6 @@ export default function Home() {
       <SizeGuideModal
         isOpen={isSizeGuideOpen}
         onClose={() => setIsSizeGuideOpen(false)}
-      />
-
-      {/* Google Sheets Live Sync Modal */}
-      <GoogleSheetsModal
-        isOpen={isSheetsModalOpen}
-        onClose={() => setIsSheetsModalOpen(false)}
       />
 
       {/* Cart Drawer */}
@@ -280,7 +348,13 @@ export default function Home() {
         }}
       />
 
-      {/* Floating AI Shopping Assistant & Sizing Chatbot */}
+      {/* Google Sheets Sync Modal */}
+      <GoogleSheetsModal
+        isOpen={isSheetsModalOpen}
+        onClose={() => setIsSheetsModalOpen(false)}
+      />
+
+      {/* Floating AI Shopping Stylist Chatbot */}
       <Chatbot
         onOpenSizeGuide={() => setIsSizeGuideOpen(true)}
         onFilterUnder7000={() => setPriceRange('under6500')}
