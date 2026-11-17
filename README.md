@@ -1,5 +1,6 @@
 # Aura Leather Studio — Women's Maroon Leather Jackets
-### E-Commerce Store & AI Styling Chatbot in Next.js
+### E-Commerce Store & AI Styling Chatbot in Next.js (Shop.co Layout Edition)
+**Live Demo:** [https://leather-jacket.vercel.app/](https://leather-jacket.vercel.app/)
 
 An export-grade e-commerce web application inspired by [The Jacket Maker Pakistan Women's Maroon Leather Jackets Collection](https://www.thejacketmaker.pk/collections/womens-maroon-leather-jackets), specifically engineered with **reasonable, highly affordable pricing in PKR for the Pakistani middle class** and styled in an elegant **feminine Bright Purple and Warm Velvet Beige** palette.
 
